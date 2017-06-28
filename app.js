@@ -7,32 +7,11 @@ mongoose.Promise = global.Promise;
 app.use(bodyParser.urlencoded({extended:true}));
 
 mongoose.connect('mongodb://localhost/yelp_camp');
+var Campground=require("./models/campground");
+var seedDB=require("./seeds");
 app.set("view engine","ejs");
 
-
-
-//Schema Setup
-
-
-var campgroundSchema=new mongoose.Schema({
-    name:String,
-    image:String,
-    description:String
-});
-
-var Campground=mongoose.model("Campground",campgroundSchema);
-
-// Campground.create( {name:"Salmon Creek",image:"https://farm6.staticflickr.com/5181/5641024448_04fefbb64d.jpg",description:"Hige One.No batroom,beautiful"},function(err,campground){
-//     if(err)
-//     {
-//         console.log("Error");
-//     }
-//     else{
-//         console.log(campground);
-//     }
-// });
-
-
+seedDB();
 
 app.get("/",function(req,res){
     res.render("landing");
@@ -83,13 +62,14 @@ app.post("/campgrounds",function(req,res){
 
 app.get("/campgrounds/:id",function(req, res) {
     
-    Campground.findById(req.params.id,function(error,foundCampground){
+    Campground.findById(req.params.id).populate("comments").exec(function(error,foundCampground){
         
         if(error)
         {
             console.log(error);
         }
         else{
+            console.log(foundCampground);
              res.render("show",{campground:foundCampground});
         }
         
