@@ -13,6 +13,8 @@ var seedDB=require("./seeds");
 app.use(express.static(__dirname + "/public"));
 app.set("view engine","ejs");
 
+var User=require("./models/user");
+
 seedDB();
 
 app.get("/",function(req,res){
@@ -120,6 +122,9 @@ app.post("/campgrounds/:id/comments",function(req,res){
     });
     
 });
+
+
+
 
 app.listen(process.env.PORT,process.env.IP,function(){
     console.log("YelpCamp Server Started");

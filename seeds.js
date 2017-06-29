@@ -27,7 +27,6 @@ function seedDB()
             }
             console.log("Cleaned Successfully");
             seeds.forEach(function(seed){
-                console.log(seed);
                 Campground.create(seed,function(err,campground){
                 if(err)
                 {
