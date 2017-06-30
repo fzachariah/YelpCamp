@@ -16,6 +16,9 @@ var passport=require("passport");
 var LocalStrategy=require("passport-local");
 var User=require("./models/user");
 
+var methodOverride=require("method-override");
+app.use(methodOverride("_method"));
+
 
 
 var commentRoutes=require("./routes/comments");
