@@ -12,6 +12,7 @@ middlewareObj.checkCampgroundOwnership=function(req,res,next)
         
         if(err)
         {
+            req.flash("error","Campground nopt found");
             res.redirect("back");
         }
         else{
@@ -20,6 +21,7 @@ middlewareObj.checkCampgroundOwnership=function(req,res,next)
                 next();
             }
             else{
+                req.flash("error","You dont have persmission to do that");
                 res.redirect("back");
             }
         }
@@ -28,6 +30,7 @@ middlewareObj.checkCampgroundOwnership=function(req,res,next)
     }
     else
     {
+        req.flash("error","You need to be Logged In to that!");
         res.redirect("back");
     }
 };
@@ -49,6 +52,7 @@ middlewareObj.checkCommentOwnership=function(req,res,next)
                 next();
             }
             else{
+                req.flash("error","You dont have persmission to access!");
                 res.redirect("back");
             }
         }
@@ -69,6 +73,7 @@ middlewareObj.isLoggedIn= function(req,res,next){
     {
         return next();
     }
+    req.flash("error","You need to Logged In to that");
     res.redirect("/login");
 };
 

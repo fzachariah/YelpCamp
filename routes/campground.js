@@ -2,7 +2,7 @@
 var express=require("express");
 
 var router=express.Router();
-var middleware=require("../middleware")
+var middleware=require("../middleware");
 
 var Campground=require("../models/campground");
 var Comment=require("../models/comment");

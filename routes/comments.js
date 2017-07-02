@@ -37,12 +37,20 @@ router.post("/campgrounds/:id/comments",middleware.isLoggedIn,function(req,res){
         else{
            console.log(req.body.comment);
            Comment.create(req.body.comment,function(err,comment){
+               if(err)
+               {
+                   req.flash("error","Something Went wrong");
+               }
+               else
+               {
                comment.author.id=req.user._id;
                comment.author.username=req.user.username;
                comment.save();
                campground.comments.push(comment);
                campground.save();
+               req.flash("success","Successfully Added Comment")
                res.redirect("/campgrounds/"+campground._id);
+               }
            });
         }
     });
@@ -93,6 +101,7 @@ router.delete("/campgrounds/:id/comments/:comment_id",middleware.checkCommentOwn
             res.redirect("back");
         }
         else{
+            req.flash("succes","Comment Deleted");
             res.redirect("/campgrounds/"+req.params.id);
         }
     });
